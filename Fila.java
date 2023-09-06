@@ -1,10 +1,11 @@
 package PJBL_1;
 
-public class Fila{
-    private int tamanhoMaximo;
+public class Fila<T>{
+    private int tamanhoMaximo; //capacidade
     private int inicio;
     private int fim;
     private int[] elementos;
+    private int tamanho; //adicionado
 
     public Fila(int tamanho) { //construtor da fila 
         tamanhoMaximo = tamanho;
@@ -13,19 +14,18 @@ public class Fila{
         elementos = new int[tamanhoMaximo];
     }
 
-    public void enqueue(int elemento) { //adiciona um elemento ao final da fila, verificando se a fila está cheia
-        if (fim < tamanhoMaximo - 1) {
-            fim++;
-            elementos[fim] = elemento;
-        } else {
-            System.out.println("A fila está cheia!");
+    public void enfileirar(int elemento) {
+        if (tamanho == elementos.length) {
+            throw new RuntimeException("Fila cheia");
         }
+        elementos[++fim] = elemento;
+        tamanho++;
     }
 
-    public int dequeue() { // remove o elemento do início da fila, verificando se a fila está vazia
+    public int desenfileirar() { // remove o elemento do início da fila, verificando se a fila está vazia
         if (inicio <= fim) {
-            int elemento = elementos[inicio];
-            inicio++;
+            int elemento = elementos[inicio++];
+            tamanho--;
             return elemento;
         } else {
             System.out.println("A fila está vazia!");
@@ -37,8 +37,8 @@ public class Fila{
         return inicio > fim;
     }
 
-    public int size() {
-        return fim - inicio + 1;
+    public int tamanho() {
+        return tamanho;
     }
 }
 

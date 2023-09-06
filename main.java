@@ -1,29 +1,36 @@
 package PJBL_1;
 
-//limite da matriz (Index Out Of Bounds)
-/** documentação */
-public static void main(String[] args) { //MATRIZ 10X10
+public class Main {
+    public static void main(String[] args) {
         int[][] image = {
-                         {1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
-                         {1, 1, 1, 1, 1, 1, 1, 1, 0, 1},
-                         {1, 1, 1, 1, 1, 1, 1, 0, 1, 1},
-                         {1, 1, 1, 1, 1, 1, 0, 1, 1, 1},
-                         {1, 1, 1, 1, 1, 0, 1, 1, 1, 1},
-                         {1, 1, 1, 1, 0, 1, 1, 1, 1, 1},
-                         {1, 1, 1, 0, 1, 1, 1, 1, 1, 1},
-                         {1, 1, 0, 1, 1, 1, 1, 1, 1, 1},
-                         {1, 0, 1, 1, 1, 1, 1, 1, 1, 1},
-                         {0, 1, 1, 1, 1, 1, 1, 1, 1, 1}};
+                {1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
+                {1, 1, 1, 1, 1, 1, 1, 1, 0, 1},
+                {1, 1, 1, 1, 1, 1, 1, 0, 1, 1},
+                {1, 1, 1, 1, 1, 1, 0, 1, 1, 1},
+                {1, 1, 1, 1, 1, 0, 1, 1, 1, 1},
+                {1, 1, 1, 1, 0, 1, 1, 1, 1, 1},
+                {1, 1, 1, 0, 1, 1, 1, 1, 1, 1},
+                {1, 1, 0, 1, 1, 1, 1, 1, 1, 1},
+                {1, 0, 1, 1, 1, 1, 1, 1, 1, 1},
+                {0, 1, 1, 1, 1, 1, 1, 1, 1, 1}
+        };
 
+        System.out.println("Imagem original:");
+        for (int[] linha : image) {
+            for (int pixel : linha) {
+                System.out.print(pixel + " ");
+            }
+            System.out.println();
+        }
 
-        int x = 5; // coordenada x do ponto inicial
-        int y = 5; // coordenada y do ponto inicial
-        int valor = 2; // valor a ser preenchido
+        int linhaInicial = 0;
+        int colunaInicial = 0;
+        int valor = 2;
 
-        FloodFillPilha floodFillPilha = new FloodFillPilha(matriz, x, y, valor); //chamada do método executar
+        FloodFillPilha floodFillPilha = new FloodFillPilha(image, linhaInicial, colunaInicial, valor);
         floodFillPilha.executar();
 
-        FloodFillFila floodFillFila = new FloodFillFila(matriz, x, y, valor); //chamada do método executar
+        FloodFillFila floodFillFila = new FloodFillFila(image, linhaInicial, colunaInicial, valor);
         floodFillFila.executar();
         }
 }

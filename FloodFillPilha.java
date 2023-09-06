@@ -1,36 +1,45 @@
 package PJBL_1;
 
-
-public class FloodFillPilha { 
-    private int[][] matriz;
-    private int x;
-    private int y;
+public class FloodFillPilha{
+    private int[][] image;
+    private int linhaInicial;
+    private int colunaInicial;
     private int valor;
-    private Pilha pilha;
+    private Pilha<int[]> pilha;
 
-//recebe a matriz, as coordenadas do ponto inicial e o valor a ser preenchido como parâmetros no construtor
-    public FloodFillPilha(int[][] matriz, int x, int y, int valor) { 
-        this.matriz = matriz;
-        this.x = x;
-        this.y = y;
+    // Recebe a matriz, as coordenadas do ponto inicial e o valor a ser preenchido como parâmetros no construtor
+    public FloodFillPilha(int[][] image, int linhaInicial, int colunaInicial, int valor) {
+        this.image = image;
+        this.linhaInicial = linhaInicial;
+        this.colunaInicial = colunaInicial;
         this.valor = valor;
-        pilha = new Pilha(100);
-        pilha.push(x * 10 + y);
+        pilha = new Pilha<int[]>(10);
+        pilha.empilhar(new int[]{linhaInicial, colunaInicial});
     }
 
-    public void executar() { //inunda a matriz 
+    public void executar() { // inunda a matriz
+        int linhas = image.length;
+        int colunas = image[0].length;
+        int corOriginal = image[linhaInicial][colunaInicial];
+        if (corOriginal == valor) return;
+
+        int[][] direcao = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
+
         while (!pilha.isEmpty()) {
-            int ponto = pilha.pop(); 
-            int i = ponto / 10;
-            int j = ponto % 10;
-            if (matriz[i][j] == 0) {
-                matriz[i][j] = valor;
-                if (i > 0) pilha.push((i-1) * 10 + j); // ponto acima
-                if (i < 9) pilha.push((i+1) * 10 + j); // ponto abaixo
-                if (j > 0) pilha.push(i * 10 + (j-1)); // ponto à esquerda
-                if (j < 9) pilha.push(i * 10 + (j+1)); // ponto à direita
+            int[] atual = pilha.desempilhar();
+            int linha = atual[0];
+            int coluna = atual[1];
+
+            image[linha][coluna] = valor;
+
+            for (int[] dir : direcao) {
+                int linhaNova = linha + dir[0];
+                int colunaNova = coluna + dir[1];
+                if (linhaNova >= 0 && linhaNova < linhas && colunaNova >= 0 && colunaNova < colunas &&
+                    image[linhaNova][colunaNova] == corOriginal) {
+                    pilha.empilhar(new int[]{linhaNova, colunaNova}); // Empilhe um array de int[].
+                }
             }
         }
     }
 }
-
